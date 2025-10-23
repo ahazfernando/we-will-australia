@@ -244,7 +244,7 @@ const SocialDark = () => {
                   muted
                   playsInline
                 >
-                  <source src="/marketing/WWAMarketingRewampVid.mp4" type="video/mp4" />
+                  <source src="/marketing/SkillCity.mp4" type="video/mp4" />
                 </video>
               </div>
               <div className="absolute top-4 left-4">
