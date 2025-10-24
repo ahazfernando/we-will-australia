@@ -21,7 +21,7 @@ const HomeHeroA: React.FC<HomeHeroAProps> = ({ onExploreClick }) => {
   const melbourneCoords = { lat: -56.0, lng: 144.9631 };
 
   return (
-    <section className="relative h-[90vh] sm:h-[85vh] md:h-screen pt-32 md:pt-16">
+    <section className="relative h-[90vh] sm:h-[85vh] md:h-screen pt-32 md:pt-16 overflow-hidden">
       {/* Aurora Background Effect */}
       <div className="absolute inset-0 overflow-hidden">
         <div
@@ -34,11 +34,11 @@ const HomeHeroA: React.FC<HomeHeroAProps> = ({ onExploreClick }) => {
           }}
         ></div>
       </div>
-      <div className="absolute inset-0 overflow-hidden bg-black"></div>
+      <div className="absolute inset-0 bg-black"></div>
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-transparent"></div>
       
       {/* World Map Background */}
-      <div className="absolute inset-0 z-5 opacity-18 transform translate-y-4">
+      <div className="absolute inset-0 z-5 opacity-18">
         <DarkWorldMap
           dots={[
             // Melbourne -> Los Angeles
