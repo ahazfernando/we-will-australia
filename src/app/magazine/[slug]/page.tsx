@@ -42,9 +42,11 @@ async function getMagazineArticle(slug: string): Promise<MagazineArticle | null>
     return article;
 }
 
-export async function generateMetadata(props: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { params } = props;
-    const article = await getMagazineArticle(params.slug);
+    const { slug } = await params;
+    const decodedSlug = decodeURIComponent(slug);
+    const article = await getMagazineArticle(decodedSlug);
 
     if (!article) {
         return {
@@ -58,12 +60,12 @@ export async function generateMetadata(props: { params: { slug: string } }): Pro
         description: article.excerpt,
         keywords: article.tags,
         alternates: {
-            canonical: `https://www.wewillaustralia.com.au/magazine/${article.slug}`,
+            canonical: `https://www.wewillaustralia.com.au/magazine/${decodedSlug}`,
         },
         openGraph: {
             title: `${article.title} | WWA Community Magazine`,
             description: article.excerpt,
-            url: `https://www.wewillaustralia.com.au/magazine/${article.slug}`,
+            url: `https://www.wewillaustralia.com.au/magazine/${decodedSlug}`,
             images: [{ url: article.imageURL, width: 1200, height: 630, alt: article.title }],
         },
         twitter: {
@@ -75,9 +77,11 @@ export async function generateMetadata(props: { params: { slug: string } }): Pro
     };
 }
 
-const MagazineArticlePage = async (props: { params: { slug: string } }) => {
+const MagazineArticlePage = async (props: { params: Promise<{ slug: string }> }) => {
     const { params } = props;
-    const article = await getMagazineArticle(params.slug);
+    const { slug } = await params;
+    const decodedSlug = decodeURIComponent(slug);
+    const article = await getMagazineArticle(decodedSlug);
 
     if (!article) {
         notFound();

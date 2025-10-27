@@ -122,7 +122,7 @@ const MagazinePageClient: React.FC<{ allArticles: MagazineArticle[] }> = ({ allA
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {featuredArticles.length > 0 ? (
                             <div className="md:col-span-2 lg:col-span-2">
-                                <Link href={`/magazine/${featuredArticles[0].slug}`}>
+                                <Link href={`/magazine/${encodeURIComponent(featuredArticles[0].slug)}`}>
                                     <div className="relative group cursor-pointer">
                                         <div className="relative h-96 rounded-lg overflow-hidden">
                                             <Image
@@ -154,7 +154,7 @@ const MagazinePageClient: React.FC<{ allArticles: MagazineArticle[] }> = ({ allA
                             </div>
                         ) : heroArticles.length > 0 && (
                             <div className="md:col-span-2 lg:col-span-2">
-                                <Link href={`/magazine/${heroArticles[0].slug}`}>
+                                <Link href={`/magazine/${encodeURIComponent(heroArticles[0].slug)}`}>
                                     <div className="relative group cursor-pointer">
                                         <div className="relative h-96 rounded-lg overflow-hidden">
                                             <Image
@@ -183,7 +183,7 @@ const MagazinePageClient: React.FC<{ allArticles: MagazineArticle[] }> = ({ allA
 
                         <div className="space-y-6">
                             {heroArticles.slice(1, 5).map((article, index) => (
-                                <Link key={article.id} href={`/magazine/${article.slug}`}>
+                                <Link key={article.id} href={`/magazine/${encodeURIComponent(article.slug)}`}>
                                     <div className="relative group cursor-pointer">
                                         <div className="relative h-48 rounded-lg overflow-hidden">
                                             <Image
@@ -228,7 +228,7 @@ const MagazinePageClient: React.FC<{ allArticles: MagazineArticle[] }> = ({ allA
                         </div>
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                             <div className="lg:col-span-2">
-                                <Link href={`/magazine/${editorPicks[0].slug}`}>
+                                <Link href={`/magazine/${encodeURIComponent(editorPicks[0].slug)}`}>
                                     <div className="relative group cursor-pointer">
                                         <div className="relative h-80 rounded-lg overflow-hidden">
                                             <Image
@@ -262,7 +262,7 @@ const MagazinePageClient: React.FC<{ allArticles: MagazineArticle[] }> = ({ allA
 
                             <div className="space-y-6">
                                 {editorPicks.slice(1, 4).map((article) => (
-                                    <Link key={article.id} href={`/magazine/${article.slug}`}>
+                                    <Link key={article.id} href={`/magazine/${encodeURIComponent(article.slug)}`}>
                                         <div className="flex gap-4 group cursor-pointer">
                                             <div className="relative w-24 h-24 rounded-lg overflow-hidden flex-shrink-0">
                                                 <Image
@@ -301,7 +301,7 @@ const MagazinePageClient: React.FC<{ allArticles: MagazineArticle[] }> = ({ allA
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                             {spotlightArticles.map((article) => (
-                                <Link key={article.id} href={`/magazine/${article.slug}`}>
+                                <Link key={article.id} href={`/magazine/${encodeURIComponent(article.slug)}`}>
                                     <div className="relative group cursor-pointer">
                                         <div className="relative h-48 rounded-lg overflow-hidden">
                                             <Image
@@ -341,7 +341,7 @@ const MagazinePageClient: React.FC<{ allArticles: MagazineArticle[] }> = ({ allA
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {filteredArticles.map((article) => (
-                            <Link key={article.id} href={`/magazine/${article.slug}`}>
+                            <Link key={article.id} href={`/magazine/${encodeURIComponent(article.slug)}`}>
                                 <div className="relative group cursor-pointer bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
                                     <div className="relative h-48">
                                         <Image

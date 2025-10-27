@@ -42,8 +42,10 @@ async function getArticle(slug: string): Promise<Article | null> {
 }
 
 // Your metadata generation function remains correct as it runs on the server.
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-    const article = await getArticle(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const { slug } = await params;
+    const decodedSlug = decodeURIComponent(slug);
+    const article = await getArticle(decodedSlug);
 
     if (!article) {
         return {
@@ -57,12 +59,12 @@ export async function generateMetadata({ params }: { params: { slug: string } })
         description: article.excerpt,
         keywords: article.tags,
         alternates: {
-            canonical: `https://www.wewillaustralia.com.au/blog/${params.slug}`,
+            canonical: `https://www.wewillaustralia.com.au/blog/${decodedSlug}`,
         },
         openGraph: {
             title: article.title,
             description: article.excerpt,
-            url: `https://www.wewillaustralia.com.au/blog/${params.slug}`,
+            url: `https://www.wewillaustralia.com.au/blog/${decodedSlug}`,
             type: 'article',
             images: [
                 {
@@ -105,8 +107,10 @@ const getTagBgColor = (tag: string): string => {
     }
 };
 
-const BlogPostPage = async ({ params }: { params: { slug: string } }) => {
-    const article = await getArticle(params.slug);
+const BlogPostPage = async ({ params }: { params: Promise<{ slug: string }> }) => {
+    const { slug } = await params;
+    const decodedSlug = decodeURIComponent(slug);
+    const article = await getArticle(decodedSlug);
 
     // If no article is found, render the 404 page.
     if (!article) {
