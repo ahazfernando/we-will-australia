@@ -61,7 +61,7 @@ const OtherBlogs: React.FC<OtherBlogsProps> = ({ articles }) => {
                     {articles.map(article => (
                         <Card key={article.id} className="bg-white rounded-2xl shadow-lg overflow-hidden flex flex-col border-gray-200/80">
                             <div className="aspect-w-16 aspect-h-9">
-                                <Link href={`/blog/${article.slug}`} className="block">
+                                <Link href={`/blog/${encodeURIComponent(article.slug)}`} className="block">
                                     <Image
                                         src={`/blogs/${article.imageURL}`}
                                         alt={article.title}
@@ -108,7 +108,7 @@ const OtherBlogs: React.FC<OtherBlogsProps> = ({ articles }) => {
                                 </div>
 
                                 <Link
-                                    href={`/blog/${article.slug}`}
+                                    href={`/blog/${encodeURIComponent(article.slug)}`}
                                     className="text-white rounded-lg hover:opacity-90 transition-opacity px-4 py-2 h-8 text-sm flex items-center justify-center"
                                     style={{
                                         backgroundColor: '#001114'

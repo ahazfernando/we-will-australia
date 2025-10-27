@@ -55,7 +55,7 @@ const MostRecentBlog: React.FC<MostRecentBlogProps> = ({ article }) => {
     return (
         <section className="py-12 md:py-20 bg-gray-50">
             <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                <a href={`/blog/${article.slug}`} className="block group">
+                <a href={`/blog/${encodeURIComponent(article.slug)}`} className="block group">
                     {/* Mobile Layout */}
                     <Card className="block md:hidden bg-white p-6 rounded-2xl shadow-sm border-gray-200/80 hover:shadow-lg transition-shadow duration-300">
                         <div className="rounded-xl overflow-hidden mb-6">
