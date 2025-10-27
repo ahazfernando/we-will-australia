@@ -7,6 +7,7 @@ import CtaDark from "@/components/it-solutions/CtaDark";
 import SpecializationsDark from "@/components/it-solutions/SpecializationsDark";
 import NewsletterDark from "@/components/it-solutions/NewsletterDark";
 import ITSolutionsFeatureGrid from "@/components/it-solutions/ITSolutionsFeatureGrid";
+import ITDownloadSection from "@/components/it-solutions/ITDownloadSection";
 
 export default function ITSolutionsDark() {
     const specialisationsSectionRef = useRef<HTMLElement>(null);
@@ -20,6 +21,7 @@ export default function ITSolutionsDark() {
       <ITSolutionsFeatureGrid />
       <CtaDark />
       <FaqDark />
+      <ITDownloadSection />
       <NewsletterDark />
     </main>
   );
