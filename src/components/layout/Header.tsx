@@ -17,6 +17,7 @@ const navLinks = [
   { href: "/services/marketing", label: "Marketing" },
   { href: "/services/it-solutions", label: "Technology" },
   { href: "/recruitment", label: "Recruitment" },
+  { href: "/magazine", label: "Magazine" },
   // { href: "/about", label: "About Us" },
   // { href: "/blog", label: "Blog" },
   // { href: "/careers", label: "Careers" },
