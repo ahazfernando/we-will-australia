@@ -93,7 +93,7 @@ const ContactFormSection: React.FC = () => {
               <RadioGroup
                 value={service}
                 onValueChange={setService}
-                className="space-y-3"
+                className="flex flex-wrap gap-4 md:gap-6"
               >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="Marketing Services" id="marketing" />
