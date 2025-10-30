@@ -5,6 +5,8 @@ import MagazinePageClient from "./MagazinePageClient";
 import { MagazineArticle } from "@/types/magazine";
 
 export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 
 export const metadata: Metadata = {
     title: "WWA Community Magazine | Professional Insights & Stories",
@@ -28,27 +30,62 @@ export const metadata: Metadata = {
 };
 
 async function getMagazineArticles(): Promise<MagazineArticle[]> {
-    const articlesQuery = query(collection(db, 'magazine'), orderBy('date', 'desc'));
-    const querySnapshot = await getDocs(articlesQuery);
+    try {
+        // Try ordering by date first, but handle cases where date might be missing
+        let articlesQuery;
+        try {
+            articlesQuery = query(collection(db, 'magazine'), orderBy('date', 'desc'));
+        } catch (error) {
+            // If orderBy fails (e.g., missing index), fall back to unordered query
+            articlesQuery = query(collection(db, 'magazine'));
+        }
+        
+        const querySnapshot = await getDocs(articlesQuery);
 
-    return querySnapshot.docs.map(doc => {
-        const data = doc.data();
-        const article: MagazineArticle = {
-            id: doc.id,
-            slug: data.slug || '',
-            title: data.title || '',
-            excerpt: data.excerpt || '',
-            imageURL: data.imageURL || '',
-            tags: data.tags || [],
-            content: data.content,
-            category: data.category || 'ordinary',
-            author: data.author || { name: 'Unknown', avatarURL: '' },
-            date: data.date?.toDate ? data.date.toDate().toISOString() : data.date,
-            createdAt: data.createdAt?.toDate ? data.createdAt.toDate().toISOString() : data.createdAt,
-            lastUpdated: data.lastUpdated?.toDate ? data.lastUpdated.toDate().toISOString() : data.lastUpdated,
-        };
-        return article;
-    });
+        const articles = querySnapshot.docs.map(doc => {
+            const data = doc.data();
+            const article: MagazineArticle = {
+                id: doc.id,
+                slug: data.slug || '',
+                title: data.title || '',
+                excerpt: data.excerpt || '',
+                imageURL: data.imageURL || '',
+                tags: data.tags || [],
+                content: data.content,
+                category: data.category || 'ordinary',
+                author: data.author || { name: 'Unknown', avatarURL: '' },
+                date: data.date?.toDate ? data.date.toDate().toISOString() : (data.date || new Date().toISOString()),
+                createdAt: data.createdAt?.toDate ? data.createdAt.toDate().toISOString() : (data.createdAt || new Date().toISOString()),
+                lastUpdated: data.lastUpdated?.toDate ? data.lastUpdated.toDate().toISOString() : (data.lastUpdated || new Date().toISOString()),
+            };
+            return article;
+        });
+
+        // Sort articles by date in case Firestore ordering failed or dates are inconsistent
+        articles.sort((a, b) => {
+            const getDateValue = (article: MagazineArticle): number => {
+                const dateValue = article.date || article.createdAt || article.lastUpdated;
+                if (!dateValue) return 0;
+                if (typeof dateValue === 'string') {
+                    return new Date(dateValue).getTime();
+                }
+                // Handle Timestamp type
+                if (dateValue && typeof (dateValue as any).toDate === 'function') {
+                    return (dateValue as any).toDate().getTime();
+                }
+                return 0;
+            };
+            
+            const dateA = getDateValue(a);
+            const dateB = getDateValue(b);
+            return dateB - dateA; // Newest first
+        });
+
+        return articles;
+    } catch (error) {
+        console.error('Error fetching magazine articles:', error);
+        return [];
+    }
 }
 
 const MagazinePage = async () => {
