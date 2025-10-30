@@ -12,6 +12,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from 'next/link';
 import { ArrowLeft, Calendar, User } from 'lucide-react';
 
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+export const runtime = 'nodejs';
+
 async function getMagazineArticle(slug: string): Promise<MagazineArticle | null> {
     const articlesRef = collection(db, 'magazine');
     const q = query(articlesRef, where("slug", "==", slug));
