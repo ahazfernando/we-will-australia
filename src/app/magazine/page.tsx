@@ -4,6 +4,8 @@ import { Metadata } from "next";
 import MagazinePageClient from "./MagazinePageClient";
 import { MagazineArticle } from "@/types/magazine";
 
+export const revalidate = 0;
+
 export const metadata: Metadata = {
     title: "WWA Community Magazine | Professional Insights & Stories",
     description: "Discover inspiring stories, professional insights, and community highlights from We Will Australia's magazine featuring featured articles, editor's picks, and spotlight content.",
