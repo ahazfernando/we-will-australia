@@ -7,6 +7,7 @@ import { MagazineArticle } from "@/types/magazine";
 export const revalidate = 0;
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'force-no-store';
+export const runtime = 'nodejs';
 
 export const metadata: Metadata = {
     title: "WWA Community Magazine | Professional Insights & Stories",
